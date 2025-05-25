@@ -1,4 +1,8 @@
+import message.Response;
+import message.ResponseHeaderV1;
+
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -17,12 +21,24 @@ public class Main {
        serverSocket.setReuseAddress(true);
        // Wait for connection from client.
        clientSocket = serverSocket.accept();
+
+       Response response = new Response();
+       response.setMessageSize(0);
+       response.setHeader(new ResponseHeaderV1(7));
+
+         OutputStream out = clientSocket.getOutputStream();
+         out.write(response.getBytes());
+         out.flush();
+
      } catch (IOException e) {
        System.out.println("IOException: " + e.getMessage());
      } finally {
        try {
          if (clientSocket != null) {
            clientSocket.close();
+         }
+         if (serverSocket != null){
+             serverSocket.close();
          }
        } catch (IOException e) {
          System.out.println("IOException: " + e.getMessage());
