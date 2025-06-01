@@ -1,7 +1,7 @@
-import message.Response;
-import message.ResponseHeaderV1;
+import message.*;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,6 +10,11 @@ public class Main {
   public static void main(String[] args){
     // You can use print statements as follows for debugging, they'll be visible when running tests.
     System.err.println("Logs from your program will appear here!");
+
+      HeaderParser hp = new HeaderV2Parser();
+      RequestParser requestParser = new RequestParser(hp);
+
+
 
      ServerSocket serverSocket = null;
      Socket clientSocket = null;
@@ -22,9 +27,13 @@ public class Main {
        // Wait for connection from client.
        clientSocket = serverSocket.accept();
 
+       InputStream inputStream =  clientSocket.getInputStream();
+       Request request = requestParser.parseRequest(inputStream);
+       int correlationId = request.getHeader().getCorrelationId();
+
        Response response = new Response();
        response.setMessageSize(0);
-       response.setHeader(new ResponseHeaderV1(7));
+       response.setHeader(new ResponseHeaderV1(correlationId));
 
          OutputStream out = clientSocket.getOutputStream();
          out.write(response.getBytes());

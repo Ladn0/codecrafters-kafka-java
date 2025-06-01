@@ -22,6 +22,7 @@ public class ResponseHeaderV1 implements Header{
         this.correlationId = correlation_id;
     }
 
+    @Override
     public byte[] getBytes(){
         ByteBuffer buffer = ByteBuffer.allocate(4);
         buffer.order(ByteOrder.BIG_ENDIAN);
