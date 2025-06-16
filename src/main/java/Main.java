@@ -36,10 +36,13 @@ public class Main {
        response.setHeader(new ResponseHeaderV1(correlationId));
          System.out.println(request.toString());
        // Create message body
+         MessageBody messageBody;
          if (request.getHeader().getRequestApiVersion() < 0 || request.getHeader().getRequestApiVersion() > 4) {
-             MessageBody messageBody = new ApiVersionsBody(ApiVersionsErrorCode.UNSUPPORTED_VERSION);
-             response.setMessageBody(messageBody);
+             messageBody = new ApiVersionsBody(ApiVersionsErrorCode.UNSUPPORTED_VERSION);
+         }else{
+             messageBody = new ApiVersionsBody(ApiVersionsErrorCode.NONE);
          }
+         response.setMessageBody(messageBody);
 
          OutputStream out = clientSocket.getOutputStream();
          out.write(response.getBytes());

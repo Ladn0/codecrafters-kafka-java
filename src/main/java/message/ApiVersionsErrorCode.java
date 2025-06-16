@@ -1,7 +1,8 @@
 package message;
 
 public enum ApiVersionsErrorCode {
-    UNSUPPORTED_VERSION((short) 35);
+    UNSUPPORTED_VERSION((short) 35),
+    NONE((short) 0);
 
     private final short code;
 
