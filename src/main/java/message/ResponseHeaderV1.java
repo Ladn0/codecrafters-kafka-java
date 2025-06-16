@@ -18,6 +18,16 @@ public class ResponseHeaderV1 implements Header{
         return correlationId;
     }
 
+    @Override
+    public short getRequestApiKey() {
+        return 0;
+    }
+
+    @Override
+    public short getRequestApiVersion() {
+        return 0;
+    }
+
     public void setCorrelationId(int correlation_id) {
         this.correlationId = correlation_id;
     }

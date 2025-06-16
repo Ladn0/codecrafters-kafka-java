@@ -34,6 +34,12 @@ public class Main {
        Response response = new Response();
        response.setMessageSize(0);
        response.setHeader(new ResponseHeaderV1(correlationId));
+         System.out.println(request.toString());
+       // Create message body
+         if (request.getHeader().getRequestApiVersion() < 0 || request.getHeader().getRequestApiVersion() > 4) {
+             MessageBody messageBody = new ApiVersionsBody(ApiVersionsErrorCode.UNSUPPORTED_VERSION);
+             response.setMessageBody(messageBody);
+         }
 
          OutputStream out = clientSocket.getOutputStream();
          out.write(response.getBytes());
