@@ -1,9 +1,11 @@
-package message;
+package response.body;
+
+import message.Body;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class ApiVersionsBody implements MessageBody{
+public class ApiVersionsBody implements ResponseBody {
 
     private ApiVersionsErrorCode errorCode;
 

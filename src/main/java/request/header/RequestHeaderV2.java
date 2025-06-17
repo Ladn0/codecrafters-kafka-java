@@ -1,8 +1,8 @@
-package message;
+package request.header;
 
 import java.lang.reflect.Array;
 
-public class RequestHeaderV2 implements Header{
+public class RequestHeaderV2 implements RequestHeader {
 
     private short requestApiKey;
     private short requestApiVersion;
@@ -51,11 +51,6 @@ public class RequestHeaderV2 implements Header{
 
     public void setTagBuffer(Array tagBuffer) {
         this.tagBuffer = tagBuffer;
-    }
-
-    @Override
-    public byte[] getBytes() {
-        return new byte[0];
     }
 
     @Override

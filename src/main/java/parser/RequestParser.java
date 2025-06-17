@@ -1,6 +1,9 @@
-package message;
+package parser;
 
-import java.io.DataInput;
+import parser.header.HeaderParser;
+import request.Request;
+import request.header.RequestHeader;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +18,7 @@ public class RequestParser {
         this.headerParser = headerParser;
     }
 
-    public  Request parseRequest (InputStream inputStream) throws IOException {
+    public Request parseRequest (InputStream inputStream) throws IOException {
         DataInputStream dataInputStream = new DataInputStream(inputStream);
         int messageSize = dataInputStream.readInt();
         byte[] data = new byte[messageSize];
@@ -26,7 +29,7 @@ public class RequestParser {
         ByteBuffer buffer = ByteBuffer.wrap(data);
         buffer.order(ByteOrder.BIG_ENDIAN);
 
-        Header header = headerParser.parseHeader(buffer);
+        RequestHeader header = headerParser.parseHeader(buffer);
 
         Request request = new Request();
         request.setMessageSize(messageSize);

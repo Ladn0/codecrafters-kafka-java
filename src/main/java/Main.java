@@ -1,4 +1,13 @@
 import message.*;
+import parser.header.HeaderParser;
+import parser.header.HeaderV2Parser;
+import request.Request;
+import parser.RequestParser;
+import response.body.ApiVersionsBody;
+import response.body.ApiVersionsErrorCode;
+import response.Response;
+import response.body.ResponseBody;
+import response.header.ResponseHeaderV1;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,20 +38,22 @@ public class Main {
 
        InputStream inputStream =  clientSocket.getInputStream();
        Request request = requestParser.parseRequest(inputStream);
+
        int correlationId = request.getHeader().getCorrelationId();
 
        Response response = new Response();
        response.setMessageSize(0);
        response.setHeader(new ResponseHeaderV1(correlationId));
+
          System.out.println(request.toString());
        // Create message body
-         MessageBody messageBody;
+         ResponseBody body;
          if (request.getHeader().getRequestApiVersion() < 0 || request.getHeader().getRequestApiVersion() > 4) {
-             messageBody = new ApiVersionsBody(ApiVersionsErrorCode.UNSUPPORTED_VERSION);
+             body = new ApiVersionsBody(ApiVersionsErrorCode.UNSUPPORTED_VERSION);
          }else{
-             messageBody = new ApiVersionsBody(ApiVersionsErrorCode.NONE);
+             body = new ApiVersionsBody(ApiVersionsErrorCode.NONE);
          }
-         response.setMessageBody(messageBody);
+         response.setBody(body);
 
          OutputStream out = clientSocket.getOutputStream();
          out.write(response.getBytes());

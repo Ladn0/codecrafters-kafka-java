@@ -1,12 +1,14 @@
-package message;
+package parser.header;
+
+import request.header.RequestHeader;
+import request.header.RequestHeaderV2;
 
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 
-public class HeaderV2Parser implements HeaderParser{
+public class HeaderV2Parser implements HeaderParser {
 
     @Override
-    public Header parseHeader(ByteBuffer buffer) {
+    public RequestHeader parseHeader(ByteBuffer buffer) {
         RequestHeaderV2 header = new RequestHeaderV2();
         header.setRequestApiKey(buffer.getShort());
         header.setRequestApiVersion(buffer.getShort());

@@ -1,9 +1,11 @@
-package message;
+package response.header;
+
+import message.Header;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class ResponseHeaderV1 implements Header{
+public class ResponseHeaderV1 implements ResponseHeader {
 
     private int correlationId;
 
@@ -16,16 +18,6 @@ public class ResponseHeaderV1 implements Header{
 
     public int getCorrelationId() {
         return correlationId;
-    }
-
-    @Override
-    public short getRequestApiKey() {
-        return 0;
-    }
-
-    @Override
-    public short getRequestApiVersion() {
-        return 0;
     }
 
     public void setCorrelationId(int correlation_id) {

@@ -1,4 +1,4 @@
-package message;
+package response.body;
 
 public enum ApiVersionsErrorCode {
     UNSUPPORTED_VERSION((short) 35),

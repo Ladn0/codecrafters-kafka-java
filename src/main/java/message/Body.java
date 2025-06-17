@@ -1,5 +1,5 @@
 package message;
 
-public interface MessageBody {
+public interface Body {
     byte[] getBytes();
 }
